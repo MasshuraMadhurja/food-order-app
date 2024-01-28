@@ -1,0 +1,22 @@
+{
+  "name": "food-app",
+  "version": "1.0.0",
+  "description": "Food delivery app",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasshuraMadhurja/food-order-app.git"
+  },
+  "author": "Masshura",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MasshuraMadhurja/food-order-app/issues"
+  },
+  "homepage": "https://github.com/MasshuraMadhurja/food-order-app#readme",
+  "devDependencies": {
+    "parcel": "^2.11.0"
+  }
+}
