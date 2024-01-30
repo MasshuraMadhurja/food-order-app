@@ -1,3 +1,8 @@
+*{
+    font-family:"Basis Grotesque Pro", Arial, sans-serif !important;
+}
+
+
 .header{
     display: flex;
     justify-content: space-between;
@@ -18,12 +23,18 @@ padding-right: 15px;
 .nav-items>ul> li{
     padding: 10px;
 }
+
+
+
 .card{
     width: 280px ;
    border-radius: 16px;
     border: 1px solid black;
     padding: 5px;
     margin: 10px; 
+    line-height: 1.2;
+    font-weight: 300;
+    font-size: 14px;
 }
 .card>img{
     width: 100%; 
@@ -32,5 +43,32 @@ padding-right: 15px;
 .restaurant-list{
     display: grid;
     grid-template-columns: auto auto auto auto;
-    
+   
+   
+}
+
+
+
+
+.card > span{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.card > span > h4{
+    text-align: center;
+}
+
+.card > span > h4:first-child{
+    display: flex;
+    align-items: center;
+    background-color: rgb(19, 176, 1);
+    border-radius: 5px;
+    padding: 0 5px 0;
+    color: white;
+}
+
+.card > span > h4:first-child .fa-star{
+    font-size: small;
+    padding: 0 5px 3px 0;
 }
