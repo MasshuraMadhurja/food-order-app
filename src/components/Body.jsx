@@ -1,49 +1,111 @@
-import { useState } from "react";
 import { restaurantList } from "../constants";
-import RestaurantCard from "./RestaurantCard";
-
-function filterData(searchText, restaurant){
-  restaurant.filter()
+import RestrauntCard from "./RestrauntCard";
+import { useState, useEffect } from "react";
+import Shimmer from "./Shimmer";
+import { IMAGE_CDN_URL } from "../constants";
+function filteredRestaurants(searchText, actualData) {
+  const data = actualData.filter((restaurant) => {
+    return restaurant.info.name
+      .toLowerCase()
+      .includes(searchText.toLowerCase());
+  });
+  return data;
 }
 
 const Body = () => {
- 
-  const [restaurant,setResturant]=useState(restaurantList)
   const [searchText, setSearchText] = useState("");
+  const [restaurants, setRestaurants] = useState(restaurantList);
+  const [actualData, setActualData] = useState({});
+  const [crouselCards, setCrouselCards] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  async function getRestaurants() {
+    setIsLoaded(false);
+    try {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.8973944&lng=78.0880129&page_type=DESKTOP_WEB_LISTING"
+      );
+      const json = await data.json();
+      setRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      setCrouselCards(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      setIsLoaded(true);
+      setActualData(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getRestaurants();
+  }, []);
 
   return (
     <>
-      <div className="search-container">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search"
-          value={searchText}
-          onChange={(e) => {
-          setSearchText(e.searchText.value)
-          }}
-        />
-        <h1>{searchText}</h1>
-        <h2>{clicked}</h2>
-        {/*  */}
-        <button
-          className="search-button"
-          onClick={() => {
-            const data= filterData(searchText,restaurant)
-          }}
-        >
-          Search
-        </button>
-      </div>
-
-      <div className="restaurant-list">
-        {restaurantList.map((restaurant) => {
+      <div className="crousel">
+        {crouselCards.map((card, index) => {
           return (
-            <RestaurantCard key={restaurant.data.id} {...restaurant.data} />
+            <div className="card-container" key={index}>
+              <img
+                className="crousel-image"
+                src={
+                  "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_520,h_520/" +
+                  card?.data?.creativeId
+                }
+              />
+            </div>
           );
         })}
       </div>
+      <div className="search-container">
+        <form className="search-form" onSubmit={(e) => e.preventDefault()}>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search"
+            autoFocus={true}
+            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+          />
+          <button
+            className="search-btn"
+            onClick={() => {
+              const data = filteredRestaurants(searchText, actualData);
+              setRestaurants(data);
+              console.log(data);
+            }}
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
+      {!isLoaded ? (
+        <Shimmer />
+      ) : (
+        <div>
+          <p className="restaurant-count">{restaurants.length} restaurants.</p>
+          <div className="restaurant-list">
+            {restaurants.length == 0 ? (
+              <p
+                style={{ textAlign: "center", fontSize: "3rem", width: "100%" }}
+              >
+                No restaurant found...
+              </p>
+            ) : (
+              restaurants.map((restaurant) => {
+                return (
+                  <RestrauntCard
+                    {...restaurant?.info}
+                    key={restaurant?.info?.id}
+                  />
+                );
+              })
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };
+
 export default Body;
