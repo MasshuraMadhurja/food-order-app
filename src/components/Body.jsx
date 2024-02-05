@@ -1,107 +1,96 @@
+import RestaurantCard from "./RestaurantCard";
+import { useEffect, useState } from "react"; /* This is named export */
+import Shimmer from "./Shimmer"; /* This is default export */
+import { swiggy_api_URL } from "../constants";
 import { restaurantList } from "../constants";
-import RestrauntCard from "./RestrauntCard";
-import { useState, useEffect } from "react";
-import Shimmer from "./Shimmer";
-import { IMAGE_CDN_URL } from "../constants";
-function filteredRestaurants(searchText, actualData) {
-  const data = actualData.filter((restaurant) => {
-    return restaurant.info.name
-      .toLowerCase()
-      .includes(searchText.toLowerCase());
-  });
-  return data;
+
+// Filter the restaurant data according input type
+function filteredData(searchText, restaurants) {
+  const filterData = restaurants.filter((res) =>
+    res.info.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+  return filterData;
 }
 
+// Body Component for body section: It contain all restaurant cards
 const Body = () => {
+  // use useEffect for one time call getRestaurants using empty dependency array
+  useEffect(() => {
+    getRestaurants();
+  }, []);
   const [searchText, setSearchText] = useState("");
-  const [restaurants, setRestaurants] = useState(restaurantList);
-  const [actualData, setActualData] = useState({});
-  const [crouselCards, setCrouselCards] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [allRestaurants, setAllResturants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [errorMessage,setErrorMessage]=useState("")
+
+  // async function getRestaurant to fetch Swiggy API data
 
   async function getRestaurants() {
-    setIsLoaded(false);
     try {
-      const data = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.8973944&lng=78.0880129&page_type=DESKTOP_WEB_LISTING"
-      );
-      const json = await data.json();
-      setRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-      setCrouselCards(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-      setIsLoaded(true);
-      setActualData(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      // initialize checkData for Swiggy Restaurant data
+      const response = await fetch(swiggy_api_URL);
+      const json = await response.json();
+      const jsonData =
+        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants;
+      console.log(jsonData);
+      setAllResturants(jsonData);
+      setFilteredRestaurants(jsonData);
     } catch (error) {
       console.log(error);
     }
   }
 
-  useEffect(() => {
-    getRestaurants();
-  }, []);
+  if (!allRestaurants) return null;
+
+  const searchData=(searchText, restaurants)=>{
+     if (searchText !== "") {
+      const filteredData = filterData(searchText, restaurants);
+      setFilteredRestaurants(filteredData);
+        if (filteredData?.length === 0) {
+          setErrorMessage("No matches restaurant found");
+      }else {
+        setErrorMessage("");
+        setFilteredRestaurants(restaurants);
+      }
+    }
+
+  }
 
   return (
     <>
-      <div className="crousel">
-        {crouselCards.map((card, index) => {
-          return (
-            <div className="card-container" key={index}>
-              <img
-                className="crousel-image"
-                src={
-                  "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_520,h_520/" +
-                  card?.data?.creativeId
-                }
-              />
-            </div>
-          );
-        })}
-      </div>
       <div className="search-container">
-        <form className="search-form" onSubmit={(e) => e.preventDefault()}>
-          <input
-            type="text"
-            className="search-input"
-            placeholder="Search"
-            autoFocus={true}
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-          />
-          <button
-            className="search-btn"
-            onClick={() => {
-              const data = filteredRestaurants(searchText, actualData);
-              setRestaurants(data);
-              console.log(data);
-            }}
-          >
-            Search
-          </button>
-        </form>
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search a restaurant you want..."
+          value={searchText}
+          // update the state variable searchText when we typing in input box
+          onChange={(e) => setSearchText(e.target.value)}
+        ></input>
+        <button
+          className="search-btn"
+          onClick={() => {
+            searchData(searchText, allRestaurants);
+       
+          }}
+        >
+          Search
+        </button>
       </div>
 
-      {!isLoaded ? (
+      {/* if restaurants data is not fetched then display Shimmer UI after the fetched data display restaurants cards */}
+
+      {allRestaurants?.length === 0 ? (
         <Shimmer />
       ) : (
-        <div>
-          <p className="restaurant-count">{restaurants.length} restaurants.</p>
-          <div className="restaurant-list">
-            {restaurants.length == 0 ? (
-              <p
-                style={{ textAlign: "center", fontSize: "3rem", width: "100%" }}
-              >
-                No restaurant found...
-              </p>
-            ) : (
-              restaurants.map((restaurant) => {
-                return (
-                  <RestrauntCard
-                    {...restaurant?.info}
-                    key={restaurant?.info?.id}
-                  />
-                );
-              })
-            )}
-          </div>
+        <div className="restaurant-list">
+          {/* We are mapping restaurants array and passing JSON array data to RestaurantCard component as props with unique key as restaurant.data.id */}
+          {filteredRestaurants.map((restaurant) => {
+            return (
+              <RestaurantCard key={restaurant.info.id} {...restaurant.info} />
+            );
+          })}
         </div>
       )}
     </>
