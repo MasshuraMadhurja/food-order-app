@@ -35,6 +35,10 @@
   z-index: 999;
   overflow-y: hidden;
   padding-left: 10px;
+
+}
+.header1{
+  margin-bottom: 120px;
 }
 
 .header .logo {
@@ -43,6 +47,10 @@
 }
 
 /* nav items CSS */
+
+.nav-items{
+  text-decoration: none;
+}
 .nav-items > ul {
   list-style-type: none;
   display: flex;
@@ -50,16 +58,16 @@
   justify-content: space-evenly;
   padding-right: 15px;
   color: #70303f;
+
 }
 
 .nav-items > ul > li {
   padding: 10px;
   font-size: large;
   cursor: pointer;
+  text-decoration: none;
 }
-.nav-items > ul :hover {
- 
-
+.nav-items > ul :hover {  
   color:black;
 }
 
@@ -326,3 +334,4 @@
   background-color: #993d51;
   color: #fff;
 }
+

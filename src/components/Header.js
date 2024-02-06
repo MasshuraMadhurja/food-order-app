@@ -1,15 +1,11 @@
 import { useState } from "react";
-import Logo from "../../src/logo1.png"
+import Logo from "../../src/logo1.png";
+import { Link } from "react-router-dom";
 
 // Title component for display logo
 const Title = () => (
   <a href="/">
-    <img
-      className="logo"
-      src={Logo}
-      alt="Logo"
-      title="Food Fire"
-    />
+    <img className="logo" src={Logo} alt="Logo" title="Food Fire" />
   </a>
 );
 
@@ -19,13 +15,21 @@ const Header = () => {
   const [isLoggedin, setIsLoggedin] = useState(true);
 
   return (
+    <div className="header1">
+
     <div className="header">
       <Title />
       <div className="nav-items">
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact</Link>
+          </li>
           <li>
             <i className="fa-solid fa-cart-shopping"></i>
           </li>
@@ -47,7 +51,7 @@ const Header = () => {
         </ul>
       </div>
     </div>
-  );
+    </div>);
 };
 
 export default Header;
