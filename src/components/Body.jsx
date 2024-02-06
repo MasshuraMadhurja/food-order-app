@@ -33,7 +33,7 @@ const Body = () => {
       const jsonData =
         json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants;
-      console.log(jsonData);
+    
       setAllResturants(jsonData);
       setFilteredRestaurants(jsonData);
     } catch (error) {
@@ -45,14 +45,16 @@ const Body = () => {
 
   const searchData=(searchText, restaurants)=>{
      if (searchText !== "") {
-      const filteredData = filterData(searchText, restaurants);
-      setFilteredRestaurants(filteredData);
-        if (filteredData?.length === 0) {
+      const filtData = filteredData(searchText, restaurants);
+      setFilteredRestaurants(filtData);
+      setErrorMessage("");
+        if (filtData?.length === 0) {
           setErrorMessage("No matches restaurant found");
       }else {
         setErrorMessage("");
-        setFilteredRestaurants(restaurants);
-      }
+       }
+    }else{
+      setFilteredRestaurants(restaurants);
     }
 
   }
@@ -78,7 +80,7 @@ const Body = () => {
           Search
         </button>
       </div>
-
+      {errorMessage && <div className="error-container">{errorMessage}</div>}
       {/* if restaurants data is not fetched then display Shimmer UI after the fetched data display restaurants cards */}
 
       {allRestaurants?.length === 0 ? (

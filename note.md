@@ -16,3 +16,6 @@
      {
       "plugins": [ ["transform-remove-console", { "exclude": [ "error", "warn"] }] ]
       }
+
+lecture 9:
+1. npm i react-router-dom 
