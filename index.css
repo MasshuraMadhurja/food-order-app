@@ -334,4 +334,14 @@
   background-color: #993d51;
   color: #fff;
 }
+.menu{
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  gap: 30px;
+}
 
+.link{
+  text-decoration: none;
+  color: #202020;
+}

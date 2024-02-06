@@ -8,7 +8,7 @@ import About from "./components/About";
 import Error from "./components/Error";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Contact from "./components/Contact";
-import RestrauMenu from "./components/RestrauMenu";
+import RestraurantMenu from "./components/RestraurantMenu";
 
 // Header
 //    -logo
@@ -58,7 +58,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/restaurant/:resId",
-        element: <RestrauMenu/>
+        element: <RestraurantMenu/>,
        
       },
     ],

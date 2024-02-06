@@ -8,6 +8,10 @@ export const swiggy_api_URL =
 
 export const shimmer_card_unit = 20;
 
+export const swiggy_menu_api_URL =
+  "https://foodfire.onrender.com/api/menu?page-type=REGULAR_MENU&complete-menu=true&lat=21.1702401&lng=72.83106070000001&&submitAction=ENTER&restaurantId=";
+
+
 export const restaurantList = [
   {
     type: "restaurant",
