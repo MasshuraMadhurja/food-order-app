@@ -17,7 +17,10 @@
   --orange: #d97919;
   --light-red: rgb(236, 56, 56);
 }
-
+.link{
+  text-decoration: none;
+  color: #202020; 
+}
 /* Header CSS */
 .header {
   display: flex;
@@ -48,16 +51,14 @@
 
 /* nav items CSS */
 
-.nav-items{
-  text-decoration: none;
-}
+
 .nav-items > ul {
   list-style-type: none;
   display: flex;
   align-items: baseline;
   justify-content: space-evenly;
   padding-right: 15px;
-  color: #70303f;
+  color: #70303f !important;
 
 }
 
@@ -66,6 +67,7 @@
   font-size: large;
   cursor: pointer;
   text-decoration: none;
+  color: #70303f !important
 }
 .nav-items > ul :hover {  
   color:black;
@@ -341,7 +343,3 @@
   gap: 30px;
 }
 
-.link{
-  text-decoration: none;
-  color: #202020;
-}
