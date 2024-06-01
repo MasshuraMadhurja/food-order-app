@@ -1,10 +1,19 @@
-import React from 'react';
+import Profile from "./Profile";
+import ProfileClass from "./ProfileClass";
 
-const About = () => {
+import React from 'react'; 
+
+export const About = () => {
   return (
     <div>
-        <h1>About</h1>
-        <h3>This is About page</h3>
+        <div>
+            <h1>Functional Component</h1>
+            <Profile name={"mmm"} xyz="xyz"/>
+        </div>
+        <div>
+            <h1>ClassComponent</h1>
+            <ProfileClass name={"kkk"} />
+        </div>
     </div>
   )
 }

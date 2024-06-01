@@ -1,5 +1,5 @@
 import { IMG_CDN_URL } from "../constants";
-
+import star from '../images/star.png'
 // Restaurant card component: Image, name, cuisine
 const RestaurantCard = ({
   cloudinaryImageId,
@@ -17,18 +17,19 @@ const RestaurantCard = ({
       <h5>{cuisines.join(", ")}</h5>
       <h5>{areaName}</h5>
       <span>
-        <h4
-          style={
-            avgRatingString < '4'
-              ? { backgroundColor: "var(--light-red)" }
-              : avgRatingString === "--"
-                ? { backgroundColor: "white", color: "black" }
-                : { color: "white" }
-          }
-        >
-          <i className="fa-solid fa-star"></i>
-          {avgRatingString}
-        </h4>
+         <h4>
+          {/* // style={
+          //   avgRatingString < '4'
+          //     ? { backgroundColor: "var(--light-red)" }
+          //     : avgRatingString === "--"
+          //       ? { backgroundColor: "white", color: "black" }
+          //       : { color: "white" }
+          // } */}
+        
+         
+     <img src={star} className="iconStyle" /> <></>{avgRatingString}</h4> 
+          
+       
         <h4>•</h4>
         <h4>{sla?.lastMileTravelString ?? '2.0 km'}</h4>
         <h4>•</h4>

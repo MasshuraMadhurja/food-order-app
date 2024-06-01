@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Logo from "../../src/logo1.png";
 import { Link } from "react-router-dom";
+import cart from '../images/shopping-cart.png';
 
 // Title component for display logo
 const Title = () => (
@@ -31,7 +32,7 @@ const Header = () => {
             <Link to="/contact" className="link">Contact</Link>
           </li>
           <li>
-            <i className="fa-solid fa-cart-shopping"></i>
+          <img src={cart} className="iconStyle" />
           </li>
           <li>
             {/* use conditional rendering for login and logout */}

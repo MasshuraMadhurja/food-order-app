@@ -17,17 +17,19 @@ const RestraurantMenu = () => {
   const [menu, setMenu] = useState([]);
 
   async function getRestaurantInfo() {
-    const data = await fetch(swiggy_menu_api_URL + resId);
+    const data = await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9715987&lng=77.5945627&restaurantId=99017"); //swiggy_menu_api_URL + resId
 
     const json = await data.json();
     const jsonData = json?.data?.cards[0]?.card?.card?.info;
-    console.log(jsonData);
+    console.log(jsonData)
+    
     setRestaurant(jsonData);
-    const menuu =
-      json?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
-        ?.card?.itemCards;
 
-    console.log(menuu);
+   // const menuu =json?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards;
+    
+ 
+
+    //console.log(menuu);
     setMenu(menuu);
    
   }

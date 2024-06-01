@@ -130,7 +130,7 @@
 
 .card {
   width: 240px;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: -1px 5px 10px 5px rgba(42, 42, 42, 0.2);
   padding: 10px;
   margin: 20px;
@@ -154,6 +154,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 8px;
+font: 2em sans-serif;
   text-align: center;
 }
 
@@ -167,17 +168,28 @@
 .card > span > h4:first-child {
   display: flex;
   align-items: center;
-  background-color: var(--light-green);
+  /* background-color: var(--light-green); */
   border-radius: 5px;
-  color: white;
-  padding: 5px;
-  margin-top: 5px;
+  color: rgb(0, 0, 0);
+  padding:1px;
+  margin-top: 1px;
 }
 
 .card > span > h4:first-child .fa-star {
   font-size: 10px;
   padding: 0 5px 3px 0;
 }
+.iconStyle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 3px;
+
+ 
+ 
+}
+
+
 
 /*Shimmer CSS */
 .shimmer-container {
