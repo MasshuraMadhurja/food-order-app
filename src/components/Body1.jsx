@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { restaurantList } from "../constants";
 import RestaurantCard from "./RestaurantCard";
-
-function filterData(searchText, restaurants){
- const filterData= restaurants.filter((res)=> res.data.name.includes(searchText))
- return filterData;
-}
+import { filterData } from "../utils/helper";
 
 const Body = () => {
  
